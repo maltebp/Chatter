@@ -7,8 +7,8 @@ class TUI_Input {
     private Scanner scan = new Scanner(System.in);
 
     /**
-     * Gets ANY input from the user
-     * @return That which the user enters
+     * Gets ANY input from the user. Does not validate the
+     * input in any way.
      */
     private String getInput(){
         while(true) {
@@ -27,6 +27,10 @@ class TUI_Input {
     }
 
 
+    /**
+     * Prompt an input from the user in form of a single word;
+     * meaning that it may contain no spaces, nor be empty.
+     */
     String word(){
         while(true){
             String input = getInput();
