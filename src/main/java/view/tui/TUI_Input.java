@@ -26,4 +26,14 @@ class TUI_Input {
         return getInput();
     }
 
+
+    String word(){
+        while(true){
+            String input = getInput();
+            if( input != null && !input.equals("") && !input.contains(" ") ){
+                return input;
+            }
+        }
+    }
+
 }
