@@ -1,7 +1,10 @@
+import control.MainController;
+import view.tui.TUI;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        new MainController( new TUI() ).start();
     }
 
 }
