@@ -12,8 +12,25 @@ public interface UI {
 
     int mainMenu();
 
+    void showChatMessage( String msg );
+
+    void newChatRoom( String address );
+    void youJoinedChatRoom(String addrress );
+    void joinedChatRoom( String username );
+
+    String requestAddress();
+
+    String getChatMessage();
+
     enum Error{
-        INVALIDUSERNAME
+        INVALIDUSERNAME,
+        WRONGINPUT
+    }
+
+    class ConnectionAddress{
+        private String ip;
+        private int port;
+
     }
 
 }

@@ -22,8 +22,33 @@ class TUI_Input {
     }
 
 
+    String message(){
+        while(true){
+            String msg = scan.nextLine();
+            if( msg.length() > 0 ){
+                return msg;
+            }
+        }
+    }
+
     String anything(){
         return getInput();
+    }
+
+    int number( int min, int max ) throws NumberFormatException{
+        if( min < max ){
+            while(true) {
+                try {
+                    int input = Integer.parseInt(getInput());
+                    if( input < max && input >= min ) return input;
+                    System.out.println("Wrong input!");
+
+                } catch (NumberFormatException e) {
+                    throw e;
+                }
+            }
+        }
+        return -1337;
     }
 
 

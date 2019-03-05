@@ -43,7 +43,51 @@ public class TUI implements UI {
 
     @Override
     public int mainMenu() {
-        return 0;
+
+        clearScreen();
+        System.out.println("Menu:");
+
+        while(true){
+            try{
+                return input.number(0,2);
+
+            }catch(NumberFormatException e){
+                System.out.println("Wrong input!");
+            }
+        }
+    }
+
+    @Override
+    public void showChatMessage(String msg) {
+        System.out.println(msg);
+    }
+
+    @Override
+    public void newChatRoom(String address) {
+        clearScreen();
+        System.out.println("You opened a new chat room with the address:\n" +
+                            address);
+    }
+
+    @Override
+    public void youJoinedChatRoom(String addrress) {
+        clearScreen();
+        System.out.println("You've joined a chat room!");
+    }
+
+    @Override
+    public String requestAddress() {
+        return null;
+    }
+
+    @Override
+    public void joinedChatRoom(String username) {
+        System.out.println(username + " just joined the chat room!");
+    }
+
+    @Override
+    public String getChatMessage() {
+        return input.message();
     }
 
     void promptContinue(){
