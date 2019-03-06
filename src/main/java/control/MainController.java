@@ -47,7 +47,6 @@ public class MainController {
 
     }
 
-
     void hostChatRoom(){
         RoomController room = new RoomController(ui);
         HostConnection host = new HostConnection(username, room, ui);
@@ -69,17 +68,16 @@ public class MainController {
         ui.searchForRoom();
 
         LinkedList<Socket> availableRooms = RoomSearcher.getAvailableRooms();
+        String[] addresses = new String[availableRooms.size()];
+
+
+        for (int i = 0; i < availableRooms.size(); i++) {
+            addresses[i] = availableRooms.get(i).getInetAddress().toString().substring(1);
+        }
+
+        int chosenRoomId = ui.chooseRoom(addresses);
 
         if( availableRooms.size() > 0 ) {
-
-            String[] addresses = new String[availableRooms.size()];
-
-
-            for (int i = 0; i < availableRooms.size(); i++) {
-                addresses[i] = availableRooms.get(i).getInetAddress().toString().substring(1);
-            }
-
-            int chosenRoomId = ui.chooseRoom(addresses);
 
             // Close uneeded connections and start correct one
             for (int i = 0; i < availableRooms.size(); i++) {
