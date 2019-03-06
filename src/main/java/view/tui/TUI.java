@@ -45,11 +45,13 @@ public class TUI implements UI {
     public int mainMenu() {
 
         clearScreen();
-        System.out.println("Menu:");
+        System.out.println("Menu:\n" +
+                            " 1) Host new chat room\n" +
+                            " 2) Join chat room");
 
         while(true){
             try{
-                return input.number(0,2);
+                return input.number(1,3)-1;
 
             }catch(NumberFormatException e){
                 System.out.println("Wrong input!");
