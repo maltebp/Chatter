@@ -66,7 +66,7 @@ public class MainController {
         int port = ui.getPort();
 
         // Request address
-        try(Socket socket = new Socket( "localhost", 4001 )){
+        try(Socket socket = new Socket( address, 4001 )){
 
             ui.youJoinedChatRoom("");
 
