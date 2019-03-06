@@ -34,14 +34,17 @@ public class MainController {
 
         ui.welcomeUser(username);
 
-        switch(ui.mainMenu()){
-            case 0:
-                hostChatRoom();
-                break;
-            case 1:
-                joinChatRoom();
-                break;
+        while(true){
+            switch(ui.mainMenu()){
+                case 0:
+                    hostChatRoom();
+                    break;
+                case 1:
+                    joinChatRoom();
+                    break;
+            }
         }
+
     }
 
 
@@ -63,49 +66,54 @@ public class MainController {
 
 
     void joinChatRoom(){
-
         ui.searchForRoom();
 
         LinkedList<Socket> availableRooms = RoomSearcher.getAvailableRooms();
-        String[] addresses = new String[availableRooms.size()];
+
+        if( availableRooms.size() > 0 ) {
+
+            String[] addresses = new String[availableRooms.size()];
 
 
-        for( int i=0; i < availableRooms.size(); i++){
-            addresses[i] = availableRooms.get(i).getInetAddress().toString().substring(1);
-        }
+            for (int i = 0; i < availableRooms.size(); i++) {
+                addresses[i] = availableRooms.get(i).getInetAddress().toString().substring(1);
+            }
 
-        int chosenRoomId = ui.chooseRoom(addresses);
+            int chosenRoomId = ui.chooseRoom(addresses);
 
-        // Close uneeded connections and start correct one
-        for( int i=0; i < availableRooms.size(); i++){
-            if( i != chosenRoomId ){
-                try{
-                    availableRooms.get(i).close();
-                }catch(Exception e){
-                    e.printStackTrace();
+            // Close uneeded connections and start correct one
+            for (int i = 0; i < availableRooms.size(); i++) {
+                if (i != chosenRoomId) {
+                    try {
+                        availableRooms.get(i).close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }
 
-        Socket chosenRoom = availableRooms.get(chosenRoomId);
+            Socket chosenRoom = availableRooms.get(chosenRoomId);
 
-        // Request address
-        try{
+            // Request address
+            try {
 
-            ui.youJoinedChatRoom("");
-            DataOutputStream output = new DataOutputStream(chosenRoom.getOutputStream());
-            new Listener(chosenRoom, ui);
+                ui.youJoinedChatRoom("");
+                DataOutputStream output = new DataOutputStream(chosenRoom.getOutputStream());
+                new Listener(chosenRoom, ui);
 
-            output.writeBytes("CONNECT");
+                output.writeBytes("CONNECT");
 
-            while(true){
-                String msg = ui.getChatMessage();
-                if(msg.equals("exit")) break;
-                output.writeBytes(username+": "+msg);
+                while (true) {
+                    String msg = ui.getChatMessage();
+                    if (msg.equals("exit")) break;
+                    output.writeBytes(username + ": " + msg);
+                }
+                chosenRoom.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-        }catch(Exception e){
-            e.printStackTrace();
         }
 
     }
