@@ -27,4 +27,9 @@ public class HostConnection implements ChatConnection {
             room.recieveMessage( username + ": "+msg, this );
         }
     }
+
+    @Override
+    public boolean isConnected() {
+        return true;
+    }
 }

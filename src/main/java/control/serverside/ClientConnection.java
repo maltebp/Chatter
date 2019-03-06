@@ -11,6 +11,7 @@ public class ClientConnection implements Runnable, ChatConnection {
     private RoomController room;
     private boolean run = true;
     private Socket connection;
+    private boolean connected = false;
 
     private DataOutputStream output;
 
@@ -58,8 +59,13 @@ public class ClientConnection implements Runnable, ChatConnection {
                         builder.append(msgPart);
                     }
 
-                    room.recieveMessage(builder.toString(), this);
-                    builder = new StringBuilder();
+                    if( !connected && builder.toString().equals("CONNECT") ){
+                        room.addConnection(this);
+                    }else{
+                        room.recieveMessage(builder.toString(), this);
+                        builder = new StringBuilder();
+                    }
+
                 }
                 Thread.sleep(500);
             }
@@ -68,5 +74,13 @@ public class ClientConnection implements Runnable, ChatConnection {
             e.printStackTrace();
         }
 
+    }
+
+
+
+    /** Checks if the client is in the chat room */
+    @Override
+    public boolean isConnected(){
+        return connected;
     }
 }

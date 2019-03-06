@@ -29,6 +29,7 @@ public class ServerController implements Runnable {
     public void run(){
         try( ServerSocket connection = new ServerSocket(4001) ){
             while(run){
+
                 room.addConnection( new ClientConnection(connection.accept(), room) );
             }
         }catch(Exception e){

@@ -7,4 +7,6 @@ public interface ChatConnection {
      * @return Whether or not the client is still active
      */
     boolean recieveMessage( String string );
+
+    boolean isConnected();
 }

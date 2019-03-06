@@ -21,6 +21,8 @@ public interface UI {
 
     void leftChatRoom( String username );
 
+    int chooseRoom( String[] rooms );
+
     String requestAddress();
 
     String getChatMessage();

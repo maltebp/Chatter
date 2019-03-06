@@ -13,7 +13,6 @@ public class RoomController {
         this.ui = ui;
     }
 
-
     public void addConnection( ChatConnection connection ){
         ui.joinedChatRoom("Some user");
         connections.add(connection);
@@ -23,11 +22,13 @@ public class RoomController {
     /** Sends a message recieved message to all */
     public void recieveMessage(String msg, ChatConnection source ){
         for( ChatConnection client : connections){
-            if(client != source){
-                boolean clientIsActive = client.recieveMessage(msg);
-                if( !clientIsActive ){
-                    ui.leftChatRoom("Some user");
-                    connections.remove(client);
+            if( client.isConnected() ) {
+                if (client != source) {
+                    boolean clientIsActive = client.recieveMessage(msg);
+                    if (!clientIsActive) {
+                        ui.leftChatRoom("Some user");
+                        connections.remove(client);
+                    }
                 }
             }
         }
