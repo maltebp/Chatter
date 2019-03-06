@@ -1,4 +1,4 @@
-# Chatter
+# Chatter ✉
 A simple chat system for local networks. Create a chat room or join one of your friend's! 💻
 
 [-- DOWNLOAD --](https://github.com/maltebp/Chatter/releases/latest)
