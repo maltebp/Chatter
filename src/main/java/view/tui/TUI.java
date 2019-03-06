@@ -26,7 +26,7 @@ public class TUI implements UI {
     public String getUserName() {
         clearScreen();
         System.out.print("Enter your user name: ");
-        String name = input.word();
+        String name = input.message();
         System.out.println();
         return name;
     }
@@ -37,8 +37,14 @@ public class TUI implements UI {
         switch(error){
             case INVALIDUSERNAME:
                 System.out.println("That's not a valid username!");
+                break;
         }
-        promptContinue();
+        try{
+            Thread.sleep(5000);
+        }catch(Exception e){
+            e.printStackTrace();
+            promptContinue();
+        }
     }
 
     @Override
