@@ -24,7 +24,11 @@ public class RoomController {
     public void recieveMessage(String msg, ChatConnection source ){
         for( ChatConnection client : connections){
             if(client != source){
-                client.recieveMessage(msg);
+                boolean clientIsActive = client.recieveMessage(msg);
+                if( !clientIsActive ){
+                    ui.leftChatRoom("Some user");
+                    connections.remove(client);
+                }
             }
         }
     }

@@ -48,6 +48,11 @@ public class TUI implements UI {
     }
 
     @Override
+    public void leftChatRoom(String username) {
+        System.out.println(username + " left the chat.");
+    }
+
+    @Override
     public int mainMenu() {
 
         clearScreen();

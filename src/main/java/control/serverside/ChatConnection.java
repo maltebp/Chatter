@@ -1,5 +1,10 @@
 package control.serverside;
 
 public interface ChatConnection {
-    void recieveMessage( String string );
+    /**
+     *
+     * @param string The message to send
+     * @return Whether or not the client is still active
+     */
+    boolean recieveMessage( String string );
 }

@@ -19,6 +19,8 @@ public interface UI {
 
     void joinedChatRoom( String username );
 
+    void leftChatRoom( String username );
+
     String requestAddress();
 
     String getChatMessage();

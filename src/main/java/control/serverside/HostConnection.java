@@ -15,8 +15,9 @@ public class HostConnection implements ChatConnection {
     }
 
     @Override
-    public void recieveMessage( String msg ){
+    public boolean recieveMessage( String msg ){
         ui.showChatMessage( msg );
+        return true;
     }
 
     public void writeMessage(){
