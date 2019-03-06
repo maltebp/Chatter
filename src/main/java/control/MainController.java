@@ -9,6 +9,8 @@ import view.UI;
 import java.io.DataOutputStream;
 import java.net.Socket;
 
+import static java.net.InetAddress.getLocalHost;
+
 public class MainController {
 
     private UI ui;
@@ -43,15 +45,25 @@ public class MainController {
 
     void hostChatRoom(){
         RoomController room = new RoomController(ui);
-        HostConnection host = new HostConnection(room, ui);
+        HostConnection host = new HostConnection(username, room, ui);
         room.addConnection( host );
         new ServerController( room );
-        ui.newChatRoom("localhost:4000");
+
+        try{
+            ui.newChatRoom(getLocalHost().getHostAddress() + ":4001");
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
         host.writeMessage();
     }
 
 
     void joinChatRoom(){
+
+        String address = ui.getIpAddress();
+        int port = ui.getPort();
 
         // Request address
         try(Socket socket = new Socket( "localhost", 4001 )){
@@ -64,7 +76,7 @@ public class MainController {
             while(true){
                 String msg = ui.getChatMessage();
                 if(msg.equals("exit")) break;
-                output.writeBytes(msg);
+                output.writeBytes(username+": "+msg);
             }
         }catch(Exception e){
             e.printStackTrace();

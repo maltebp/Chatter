@@ -6,8 +6,10 @@ public class HostConnection implements ChatConnection {
 
     private UI ui;
     private RoomController room;
+    private String username;
 
-    public HostConnection( RoomController room, UI ui ){
+    public HostConnection( String username, RoomController room, UI ui ){
+        this.username = username;
         this.room = room;
         this.ui = ui;
     }
@@ -21,7 +23,7 @@ public class HostConnection implements ChatConnection {
         while(true){
             String msg = ui.getChatMessage();
             if( msg.equals("exit")) break;
-            room.recieveMessage( msg, this );
+            room.recieveMessage( username + ": "+msg, this );
         }
     }
 }

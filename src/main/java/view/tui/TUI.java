@@ -85,6 +85,21 @@ public class TUI implements UI {
         System.out.println(username + " just joined the chat room!");
     }
 
+
+    @Override
+    public String getIpAddress() {
+        clearScreen();
+        System.out.println("Enter IP address: ");
+        return input.word();
+    }
+
+    @Override
+    public int getPort() {
+        clearScreen();
+        System.out.println("Enter port number: ");
+        return input.number(-2030923, 230293);
+    }
+
     @Override
     public String getChatMessage() {
         return input.message();

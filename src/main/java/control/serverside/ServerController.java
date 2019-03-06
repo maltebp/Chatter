@@ -14,13 +14,6 @@ public class ServerController implements Runnable {
         this.room = room;
 
         new Thread(this).start();
-
-        try{
-
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
 
 

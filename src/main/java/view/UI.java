@@ -16,21 +16,21 @@ public interface UI {
 
     void newChatRoom( String address );
     void youJoinedChatRoom(String addrress );
+
     void joinedChatRoom( String username );
 
     String requestAddress();
 
     String getChatMessage();
 
+    String getIpAddress();
+
+    int getPort();
+
     enum Error{
         INVALIDUSERNAME,
-        WRONGINPUT
+        WRONGINPUT,
+        INVALIDPORT,
+        INVALIDADDRESS
     }
-
-    class ConnectionAddress{
-        private String ip;
-        private int port;
-
-    }
-
 }
