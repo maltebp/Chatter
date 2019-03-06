@@ -3,6 +3,8 @@ package view.tui;
 
 import view.UI;
 
+import java.sql.SQLOutput;
+
 public class TUI implements UI {
 
      private TUI_Input input = new TUI_Input();
@@ -50,6 +52,35 @@ public class TUI implements UI {
     @Override
     public void leftChatRoom(String username) {
         System.out.println(username + " left the chat.");
+    }
+
+    @Override
+    public void searchForRoom() {
+        clearScreen();
+        System.out.println("Searching for rooms...");
+    }
+
+    @Override
+    public int chooseRoom(String[] rooms) {
+        clearScreen();
+        if( rooms.length == 1 ) {
+            System.out.println("There is only 1 available room: \n  "+
+                                rooms[0]+"\n\n" +
+                                "Joining...");
+            sleep(6);
+            return 0;
+        }else if(rooms.length > 1){
+            System.out.println("There are " + rooms.length + " available rooms.\nChoose a room to join: ");
+            for (int i = 0; i < rooms.length; i++) {
+                System.out.println(" " + (i + 1) + ") " + rooms[i]);
+            }
+            return input.number(1, rooms.length + 1) - 1;
+
+        }else{
+            System.out.println("There are no available rooms.");
+        }
+        sleep(4);
+        return -1;
     }
 
     @Override
@@ -136,5 +167,15 @@ public class TUI implements UI {
         }catch(Exception e){
             System.out.println("Error occured while clearing screen.");
         }
+    }
+
+    void sleep(double seconds){
+        try{
+            Thread.sleep( (int) seconds*1000);
+        }catch(Exception e){
+            System.out.println("Error occurred during sleep");
+            e.printStackTrace();
+        }
+
     }
 }

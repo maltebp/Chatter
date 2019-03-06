@@ -3,11 +3,13 @@ package control;
 import control.serverside.HostConnection;
 import control.serverside.RoomController;
 import control.serverside.ServerController;
+import model.RoomSearcher;
 import model.Validate;
 import view.UI;
 
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.util.LinkedList;
 
 import static java.net.InetAddress.getLocalHost;
 
@@ -62,22 +64,46 @@ public class MainController {
 
     void joinChatRoom(){
 
-        String address = ui.getIpAddress();
-        int port = ui.getPort();
+        ui.searchForRoom();
+
+        LinkedList<Socket> availableRooms = RoomSearcher.getAvailableRooms();
+        String[] addresses = new String[availableRooms.size()];
+
+
+        for( int i=0; i < availableRooms.size(); i++){
+            addresses[i] = availableRooms.get(i).getInetAddress().toString().substring(1);
+        }
+
+        int chosenRoomId = ui.chooseRoom(addresses);
+
+        // Close uneeded connections and start correct one
+        for( int i=0; i < availableRooms.size(); i++){
+            if( i != chosenRoomId ){
+                try{
+                    availableRooms.get(i).close();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        Socket chosenRoom = availableRooms.get(chosenRoomId);
 
         // Request address
-        try(Socket socket = new Socket( address, 4001 )){
+        try{
 
             ui.youJoinedChatRoom("");
+            DataOutputStream output = new DataOutputStream(chosenRoom.getOutputStream());
+            new Listener(chosenRoom, ui);
 
-            DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-            new Listener(socket, ui);
+            output.writeBytes("CONNECT");
 
             while(true){
                 String msg = ui.getChatMessage();
                 if(msg.equals("exit")) break;
                 output.writeBytes(username+": "+msg);
             }
+
         }catch(Exception e){
             e.printStackTrace();
         }

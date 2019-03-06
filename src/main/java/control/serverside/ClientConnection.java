@@ -60,7 +60,9 @@ public class ClientConnection implements Runnable, ChatConnection {
                     }
 
                     if( !connected && builder.toString().equals("CONNECT") ){
+                        connected = true;
                         room.addConnection(this);
+                        builder = new StringBuilder();
                     }else{
                         room.recieveMessage(builder.toString(), this);
                         builder = new StringBuilder();

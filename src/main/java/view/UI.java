@@ -23,6 +23,8 @@ public interface UI {
 
     int chooseRoom( String[] rooms );
 
+    void searchForRoom();
+
     String requestAddress();
 
     String getChatMessage();

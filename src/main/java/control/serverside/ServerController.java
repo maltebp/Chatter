@@ -30,7 +30,8 @@ public class ServerController implements Runnable {
         try( ServerSocket connection = new ServerSocket(4001) ){
             while(run){
 
-                room.addConnection( new ClientConnection(connection.accept(), room) );
+                new ClientConnection(connection.accept(), room);
+
             }
         }catch(Exception e){
             e.printStackTrace();
