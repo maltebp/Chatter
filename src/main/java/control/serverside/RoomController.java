@@ -7,9 +7,11 @@ import java.util.LinkedList;
 public class RoomController {
 
     private final UI ui;
+    private String roomname;
     private LinkedList<ChatConnection> connections = new LinkedList<>();
 
-    public RoomController(UI ui){
+    public RoomController(String roomname, UI ui){
+        this.roomname = roomname;
         this.ui = ui;
     }
 
@@ -24,6 +26,10 @@ public class RoomController {
                 client.close();
             }
         }
+    }
+
+    public String getRoomname(){
+        return roomname;
     }
 
 

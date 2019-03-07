@@ -11,5 +11,10 @@ public class Validate {
             Character.isLetter(username.charAt(0));
     }
 
+    public static boolean roomname(String name) {
+        return  name.length() > 1   &&
+                name.length() < 15 &&
+                Character.isLetter(name.charAt(0));
+    }
 }
 //...

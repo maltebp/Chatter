@@ -47,8 +47,16 @@ public class MainController {
 
     }
 
-    void hostChatRoom(){
-        RoomController room = new RoomController(ui);
+    private void hostChatRoom(){
+
+        String roomName = "";
+        do{
+            roomName = ui.getRoomName();
+            if( Validate.roomname(roomName)) break;
+            ui.showError(UI.Error.INVALIDROOMNAME);
+        }while(true);
+
+        RoomController room = new RoomController(roomName, ui);
         HostConnection host = new HostConnection(username, room, ui);
         room.addConnection( host );
         ServerController server = new ServerController( room );
@@ -66,8 +74,9 @@ public class MainController {
     }
 
 
-    void joinChatRoom(){
+    private void joinChatRoom(){
         ui.searchForRoom();
+
 
         LinkedList<Socket> availableRooms = RoomSearcher.getAvailableRooms();
         String[] addresses = new String[availableRooms.size()];

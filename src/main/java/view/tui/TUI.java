@@ -40,6 +40,12 @@ public class TUI implements UI {
             case INVALIDUSERNAME:
                 System.out.println("That's not a valid username!");
                 break;
+            case INVALIDROOMNAME:
+                System.out.println("That's not a valid room name");
+                break;
+            default:
+                System.out.println("Error");
+                break;
         }
         try{
             Thread.sleep(5000);
@@ -111,6 +117,15 @@ public class TUI implements UI {
     @Override
     public void showChatMessage(String msg) {
         System.out.print(msg);
+    }
+
+    @Override
+    public String getRoomName() {
+        clearScreen();
+        System.out.print("Enter the room name: ");
+        String name = input.message();
+        System.out.println();
+        return name;
     }
 
     @Override

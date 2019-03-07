@@ -14,6 +14,8 @@ public interface UI {
 
     void showChatMessage( String msg );
 
+    String getRoomName( );
+
     void newChatRoom( String address );
     void youJoinedChatRoom(String addrress );
 
@@ -39,6 +41,7 @@ public interface UI {
         INVALIDUSERNAME,
         WRONGINPUT,
         INVALIDPORT,
-        INVALIDADDRESS
+        INVALIDADDRESS,
+        INVALIDROOMNAME
     }
 }

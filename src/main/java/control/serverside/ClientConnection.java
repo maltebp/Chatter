@@ -27,6 +27,8 @@ public class ClientConnection implements Runnable, ChatConnection {
             e.printStackTrace();
         }
 
+        recieveMessage(room.getRoomname());
+
         new Thread(this).start();
     }
 
