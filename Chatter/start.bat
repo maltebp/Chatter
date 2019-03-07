@@ -1,2 +1,2 @@
-java -jar "chatter-v1.0.jar"
+java -jar "chatter-v1.1.jar"
 pause

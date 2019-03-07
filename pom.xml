@@ -29,7 +29,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <finalName>chatter-v1.0</finalName>
+                    <finalName>chatter-v1.1</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <outputDirectory>Chatter</outputDirectory>
                 </configuration>
