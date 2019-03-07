@@ -111,10 +111,7 @@ public class MainController {
                 chosenRoom.close();
 
             } catch (Exception e) {
-
                 ui.chatRoomClosed();
-
-                //e.printStackTrace();
             }
 
         }

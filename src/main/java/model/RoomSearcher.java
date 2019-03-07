@@ -54,6 +54,12 @@ public class RoomSearcher {
     }
 
 
+    /**
+     * Checks if the available hosts have a chatroom open, by connecting to
+     * the chatroom socket (port 4001).
+     * @param availableAddresses Available hosts checked with getAvailableHosts()
+     * @return List of all available connections (connection already established).
+     */
     private static LinkedList<Socket> checkAvailableRooms(LinkedList<String> availableAddresses ){
         LinkedList<Socket> availableRooms = new LinkedList<>();
 
@@ -68,7 +74,7 @@ public class RoomSearcher {
                         //e.printStackTrace();
                     }
                 }
-            }).start();     // dont forget to start the thread
+            }).start();
         }
 
         try {
