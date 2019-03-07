@@ -1,12 +1,14 @@
 package model;
 
+import control.clientside.ServerConnection;
+
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.LinkedList;
 
 public class RoomSearcher {
 
-    public static LinkedList<Socket> getAvailableRooms(){
+    public static LinkedList<ServerConnection> getAvailableRooms(){
         return checkAvailableRooms( getAvailableHosts() );
     }
 
@@ -60,14 +62,15 @@ public class RoomSearcher {
      * @param availableAddresses Available hosts checked with getAvailableHosts()
      * @return List of all available connections (connection already established).
      */
-    private static LinkedList<Socket> checkAvailableRooms(LinkedList<String> availableAddresses ){
-        LinkedList<Socket> availableRooms = new LinkedList<>();
+    private static LinkedList<ServerConnection> checkAvailableRooms(LinkedList<String> availableAddresses ){
+        LinkedList<ServerConnection> availableRooms = new LinkedList<>();
 
         for( String address : availableAddresses ){
             new Thread(new Runnable() {   // new thread for parallel execution
                 public void run() {
                     try {
-                        Socket connection = new Socket(address, 4001);
+                        Socket socket = new Socket(address, 4001);
+                        ServerConnection connection = new ServerConnection(socket);
                         availableRooms.add(connection);
                     } catch (Exception e) {
                         //System.out.println(address + " has no room.");
@@ -82,7 +85,6 @@ public class RoomSearcher {
         }catch(Exception e){
             e.printStackTrace();
         }
-
 
         return availableRooms;
     }

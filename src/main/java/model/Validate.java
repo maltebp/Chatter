@@ -14,6 +14,7 @@ public class Validate {
     public static boolean roomname(String name) {
         return  name.length() > 1   &&
                 name.length() < 15 &&
+                !name.contains(";")  &&
                 Character.isLetter(name.charAt(0));
     }
 }

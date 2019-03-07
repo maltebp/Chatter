@@ -1,5 +1,6 @@
 package control;
 
+import control.clientside.ServerConnection;
 import control.serverside.HostConnection;
 import control.serverside.RoomController;
 import control.serverside.ServerController;
@@ -78,51 +79,37 @@ public class MainController {
         ui.searchForRoom();
 
 
-        LinkedList<Socket> availableRooms = RoomSearcher.getAvailableRooms();
-        String[] addresses = new String[availableRooms.size()];
+        LinkedList<ServerConnection> availableRooms = RoomSearcher.getAvailableRooms();
+        String[] names = new String[availableRooms.size()];
 
 
         for (int i = 0; i < availableRooms.size(); i++) {
-            addresses[i] = availableRooms.get(i).getInetAddress().toString().substring(1);
+            names[i] = availableRooms.get(i).getName();
         }
 
-        int chosenRoomId = ui.chooseRoom(addresses);
+        int chosenRoomId = ui.chooseRoom(names);
 
         if( availableRooms.size() > 0 ) {
 
             // Close uneeded connections and start correct one
             for (int i = 0; i < availableRooms.size(); i++) {
                 if (i != chosenRoomId) {
-                    try {
-                        availableRooms.get(i).close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    availableRooms.get(i).close();
                 }
             }
 
-            Socket chosenRoom = availableRooms.get(chosenRoomId);
+            ServerConnection room = availableRooms.get(chosenRoomId);
+            room.setUi(ui);
+            room.sendMessage("JOIN "+username+"\r\n");
 
-            // Request address
-            try {
+            ui.youJoinedChatRoom(room.getName());
 
-                ui.youJoinedChatRoom("");
-                DataOutputStream output = new DataOutputStream(chosenRoom.getOutputStream());
-                new Listener(chosenRoom, ui);
-
-                output.writeBytes("JOIN "+username+"\r\n");
-
-                while (true) {
-                    String msg = ui.getChatMessage();
-                    if (msg.equals("exit")) break;
-                    output.writeBytes(username + ": " + msg+"\r\n");
-                }
-                chosenRoom.close();
-
-            } catch (Exception e) {
-                ui.chatRoomClosed();
+            while (true) {
+                String msg = ui.getChatMessage();
+                if (msg.equals("exit")) break;
+                room.sendMessage(username + ": "+msg+"\r\n");
             }
-
+            room.close();
         }
 
     }

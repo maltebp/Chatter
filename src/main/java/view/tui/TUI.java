@@ -136,9 +136,9 @@ public class TUI implements UI {
     }
 
     @Override
-    public void youJoinedChatRoom(String addrress) {
+    public void youJoinedChatRoom(String roomName) {
         clearScreen();
-        System.out.println("You've joined a chat room!");
+        System.out.println("You've joined a chat room called '"+roomName+"'!");
     }
 
     @Override

@@ -26,23 +26,24 @@ public class ClientConnection implements Runnable, ChatConnection {
         }catch(Exception e){
             e.printStackTrace();
         }
-
-        recieveMessage(room.getRoomname());
+        recieveMessage("001;"+room.getRoomname()+"\r\n");
 
         new Thread(this).start();
     }
 
 
-    public boolean recieveMessage(String string){
-        try{
-            output.writeBytes(string);
-            return true;
-        }catch(SocketException e) {
+    public boolean recieveMessage(String msg){
+        if( run ){
+            try{
+                output.writeBytes(msg);
+                return true;
+            }catch(Exception e){
+                close();
+                return false;
+            }
+        }else{
             return false;
-        }catch(Exception e){
-            e.printStackTrace();
         }
-        return false;
     }
 
     @Override
@@ -100,7 +101,7 @@ public class ClientConnection implements Runnable, ChatConnection {
             }
 
         }catch(Exception e){
-            e.printStackTrace();
+            close();
         }
 
     }

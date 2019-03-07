@@ -17,7 +17,8 @@ public interface UI {
     String getRoomName( );
 
     void newChatRoom( String address );
-    void youJoinedChatRoom(String addrress );
+
+    void youJoinedChatRoom(String roomName );
 
     void joinedChatRoom( String username );
 
