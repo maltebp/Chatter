@@ -107,7 +107,10 @@ public class MainController {
             while (true) {
                 String msg = ui.getChatMessage();
                 if (msg.equals("exit")) break;
-                room.sendMessage(username + ": "+msg+"\r\n");
+                if( !room.sendMessage(username + ": "+msg+"\r\n") ){
+                    ui.chatRoomClosed();
+                    break;
+                }
             }
             room.close();
         }
