@@ -110,7 +110,7 @@ public class TUI implements UI {
 
     @Override
     public void showChatMessage(String msg) {
-        System.out.println(msg);
+        System.out.print(msg);
     }
 
     @Override

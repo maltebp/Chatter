@@ -33,7 +33,7 @@ public class HostConnection implements ChatConnection {
         while(true){
             String msg = ui.getChatMessage();
             if( msg.equals("exit")) break;
-            room.recieveMessage( username + ": "+msg, this );
+            room.recieveMessage( username + ": "+msg+"\r\n", this );
         }
     }
 
