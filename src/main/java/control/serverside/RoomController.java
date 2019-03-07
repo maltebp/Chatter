@@ -14,7 +14,7 @@ public class RoomController {
     }
 
     public void addConnection( ChatConnection connection ){
-        ui.joinedChatRoom("Some user");
+        ui.joinedChatRoom(connection.getUserName());
         connections.add(connection);
     }
 
@@ -34,7 +34,7 @@ public class RoomController {
                 if (client != source) {
                     boolean clientIsActive = client.recieveMessage(msg);
                     if (!clientIsActive) {
-                        ui.leftChatRoom("Some user");
+                        ui.leftChatRoom(client.getUserName());
                         connections.remove(client);
                     }
                 }

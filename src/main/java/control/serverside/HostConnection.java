@@ -8,7 +8,12 @@ public class HostConnection implements ChatConnection {
     private RoomController room;
     private String username;
 
-    public HostConnection( String username, RoomController room, UI ui ){
+    @Override
+    public String getUserName() {
+        return username;
+    }
+
+    public HostConnection(String username, RoomController room, UI ui ){
         this.username = username;
         this.room = room;
         this.ui = ui;

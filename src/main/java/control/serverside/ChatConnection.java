@@ -11,4 +11,6 @@ public interface ChatConnection {
     boolean isConnected();
 
     void close();
+
+    String getUserName();
 }

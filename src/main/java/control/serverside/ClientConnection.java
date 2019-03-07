@@ -13,6 +13,8 @@ public class ClientConnection implements Runnable, ChatConnection {
     private Socket connection;
     private boolean connected = false;
 
+    private String userName;
+
     private DataOutputStream output;
 
     public ClientConnection(Socket connection, RoomController room ){
@@ -54,6 +56,10 @@ public class ClientConnection implements Runnable, ChatConnection {
     }
 
 
+    @Override
+    public String getUserName() {
+        return userName;
+    }
 
     @Override
     public void run() {
@@ -64,24 +70,31 @@ public class ClientConnection implements Runnable, ChatConnection {
 
             while(run){
 
-                if( input.ready() ) {
+                char msgPart = (char) input.read();
+                builder.append(msgPart);
 
-                    while( input.ready() ){
-                        char msgPart = (char) input.read();
-                        builder.append(msgPart);
-                    }
+                String msg = builder.toString();
+                String msgEnd = "";
 
-                    if( !connected && builder.toString().equals("CONNECT") ){
+                if( msg.length() > 3){
+                    msgEnd = msg.substring(msg.length()-2);
+                }
+
+                if( msg.length() > 3 && msgEnd.equals("\r\n") ){
+
+                    String adjustedMsg = msg.substring(0, msg.length()-2);
+
+                    if( !connected && adjustedMsg.substring(0,4).equals("JOIN")){
+                        userName = adjustedMsg.substring(5);
                         connected = true;
                         room.addConnection(this);
-                        builder = new StringBuilder();
                     }else{
                         room.recieveMessage(builder.toString(), this);
-                        builder = new StringBuilder();
                     }
 
+                    builder = new StringBuilder();
+
                 }
-                Thread.sleep(500);
             }
 
         }catch(Exception e){

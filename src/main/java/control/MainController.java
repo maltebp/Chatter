@@ -101,12 +101,12 @@ public class MainController {
                 DataOutputStream output = new DataOutputStream(chosenRoom.getOutputStream());
                 new Listener(chosenRoom, ui);
 
-                output.writeBytes("CONNECT");
+                output.writeBytes("JOIN "+username+"\r\n");
 
                 while (true) {
                     String msg = ui.getChatMessage();
                     if (msg.equals("exit")) break;
-                    output.writeBytes(username + ": " + msg);
+                    output.writeBytes(username + ": " + msg+"\r\n");
                 }
                 chosenRoom.close();
 
