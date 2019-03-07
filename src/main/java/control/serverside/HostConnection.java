@@ -20,6 +20,10 @@ public class HostConnection implements ChatConnection {
         return true;
     }
 
+    public void close(){
+        //...
+    }
+
     public void writeMessage(){
         while(true){
             String msg = ui.getChatMessage();

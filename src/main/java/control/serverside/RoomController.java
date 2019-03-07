@@ -18,6 +18,14 @@ public class RoomController {
         connections.add(connection);
     }
 
+    public void close(){
+        for( ChatConnection client : connections){
+            if( client.isConnected() ) {
+                client.close();
+            }
+        }
+    }
+
 
     /** Sends a message recieved message to all */
     public void recieveMessage(String msg, ChatConnection source ){

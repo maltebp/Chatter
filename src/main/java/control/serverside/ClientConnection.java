@@ -41,6 +41,18 @@ public class ClientConnection implements Runnable, ChatConnection {
         return false;
     }
 
+    @Override
+    public void close(){
+        run = false;
+        try{
+            connection.close();
+            output.close();
+        }catch(Exception e){
+            //...
+        }
+
+    }
+
 
 
     @Override

@@ -9,4 +9,6 @@ public interface ChatConnection {
     boolean recieveMessage( String string );
 
     boolean isConnected();
+
+    void close();
 }

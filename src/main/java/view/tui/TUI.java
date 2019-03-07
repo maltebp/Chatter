@@ -55,6 +55,13 @@ public class TUI implements UI {
     }
 
     @Override
+    public void chatRoomClosed() {
+        clearScreen();
+        System.out.println("Chatroom was closed from server side.");
+        sleep(5);
+    }
+
+    @Override
     public void searchForRoom() {
         clearScreen();
         System.out.println("Searching for rooms...");

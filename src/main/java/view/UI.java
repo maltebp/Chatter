@@ -25,6 +25,8 @@ public interface UI {
 
     void searchForRoom();
 
+    void chatRoomClosed();
+
     String requestAddress();
 
     String getChatMessage();

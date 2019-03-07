@@ -8,6 +8,7 @@ public class ServerController implements Runnable {
 
     private RoomController room;
     private boolean run = true;
+    private ServerSocket connection;
 
 
     public ServerController(RoomController room){
@@ -17,8 +18,14 @@ public class ServerController implements Runnable {
     }
 
 
-    public void stop(){
+    public void close(){
         run = false;
+        try{
+            connection.close();
+        }catch(Exception e){
+            //..
+        }
+
     }
 
 
@@ -28,14 +35,14 @@ public class ServerController implements Runnable {
     @Override
     public void run(){
         try( ServerSocket connection = new ServerSocket(4001) ){
+            this.connection = connection;
             while(run){
-
                 new ClientConnection(connection.accept(), room);
-
             }
         }catch(Exception e){
-            e.printStackTrace();
+            //..e.printStackTrace();
         }
+
     }
 
 

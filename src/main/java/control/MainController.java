@@ -51,16 +51,18 @@ public class MainController {
         RoomController room = new RoomController(ui);
         HostConnection host = new HostConnection(username, room, ui);
         room.addConnection( host );
-        new ServerController( room );
+        ServerController server = new ServerController( room );
 
         try{
             ui.newChatRoom(getLocalHost().getHostAddress() + ":4001");
-
         }catch(Exception e){
             e.printStackTrace();
         }
 
         host.writeMessage();
+
+        server.close();
+        room.close();
     }
 
 
@@ -109,7 +111,10 @@ public class MainController {
                 chosenRoom.close();
 
             } catch (Exception e) {
-                e.printStackTrace();
+
+                ui.chatRoomClosed();
+
+                //e.printStackTrace();
             }
 
         }
